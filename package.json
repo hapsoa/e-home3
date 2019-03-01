@@ -12,6 +12,7 @@
     "firebase": "^5.8.4",
     "lodash": "^4.17.11",
     "register-service-worker": "^1.5.2",
+    "tslint-config-prettier": "^1.18.0",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",

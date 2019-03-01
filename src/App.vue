@@ -64,3 +64,17 @@
 </template>
 
 <script lang='ts' src='@/App.ts'/>
+
+<style lang="scss">
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.v-toolbar__title {
+  cursor: pointer;
+}
+</style>
