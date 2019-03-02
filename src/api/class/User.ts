@@ -1,25 +1,34 @@
 import firebase from '@/api/firebase';
 
 export interface UserData {
-  uid: string;
-  email: string;
-  nickname: string;
-  createdAt: number;
-  updatedAt: number;
+  uid: string | null;
+  email: string | null;
+  nickname: string | null;
+  createdAt: number | null;
+  updatedAt: number | null;
 }
 
-export class User implements UserData {
-  public uid: string = '';
-  public email: string = '';
-  public nickname: string = '';
-  public createdAt: number = 0;
-  public updatedAt: number = 0;
+// user instance는 한개. vuex에 하나 있을듯.
+// 로그인 로그아웃 버튼, nickname 설정할 때,
+export default class User implements UserData {
+  public uid: string | null = null;
+  public email: string | null = null;
+  public nickname: string | null = null;
+  public createdAt: number | null = null;
+  public updatedAt: number | null = null;
+
+  // public async readUser() {}
 
   public async login() {
-    const user = await firebase.auth.login();
+    // const user = await firebase.auth.login();
   }
 
   public async logout() {
     await firebase.auth.logout();
+  }
+
+  private consturctor() {
+    this.createdAt = new Date().getTime();
+    this.updatedAt = this.createdAt;
   }
 }

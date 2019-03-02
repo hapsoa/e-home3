@@ -13,7 +13,7 @@ class Authentication {
         .collection('users')
         .doc(user.uid)
         .set({
-          uid: user.uid,
+          uid: user.uid
         })
         .then(() => {
           console.log('Document successfully written!');
@@ -26,7 +26,7 @@ class Authentication {
       return new Promise((resolve, reject) => {
         database
           .collection('users')
-          .doc(userData.uid)
+          .doc(userData.uid as string)
           .set(userData)
           .then(() => {
             console.log('Document(userData) successfully written!');
@@ -61,13 +61,13 @@ class Authentication {
       });
     },
     // updatedAt 변경하는 함수
-    update(userData: UserData): Promise<void> {
+    update(uid: string): Promise<void> {
       return new Promise((resolve, reject) => {
         database
           .collection('users')
-          .doc(userData.uid)
+          .doc(uid)
           .update({
-            updatedAt: userData.updatedAt,
+            updatedAt: new Date().getTime()
           })
           .then(() => {
             console.log('Document(userData) successfully updated!');
@@ -87,13 +87,15 @@ class Authentication {
           .doc(uid)
           .delete()
           .then(() => {
-            console.log('Document successfully deleted!');
+            console.log('Document(userData) successfully deleted!');
+            resolve();
           })
           .catch(error => {
-            console.error('Error removing document: ', error);
+            console.error('Error removing document(userData): ', error);
+            reject(error);
           });
       });
-    },
+    }
   };
 
   private userOnlineListener: null | (() => void) = null;
@@ -128,16 +130,40 @@ class Authentication {
     this.userOfflineListener = listener;
   }
 
-  public async login() {
+  public async googleLogin() {
     try {
       const result = await firebase.auth().signInWithPopup(provider);
       console.log('google login');
       // This gives you a Google Access Token. You can use it to access the Google API.
       // const token = result.credential.accessToken;
       // The signed-in user info.
-      const user: object = result.user as object;
+      if (!_.isNil(result.user)) {
+        const uid = result.user.uid;
+        // console.log('result.user', result.user);
 
-      this.db.loginUser(user);
+        try {
+          // update를 시도하고, 실패하면 create 한다.
+          // uid에 해당하는 녀석에 updatedAt만 바꾼다.
+          await this.db.update(result.user.uid);
+        } catch (error) {
+          console.log(error);
+          const currentTime = new Date().getTime();
+          const newUserData: UserData = {
+            uid: result.user.uid,
+            email: result.user.email,
+            nickname: null,
+            createdAt: currentTime,
+            updatedAt: currentTime
+          };
+          // 새로 회원가입을 한다.
+          await this.db.create(newUserData);
+        }
+      } else {
+        throw new Error('googleLogin() result.user is null');
+      }
+
+      // this.db.loginUser(user);
+      // this.db.update(result.user);
     } catch (error) {
       // Handle Errors here.
       const errorCode = error.code;
@@ -147,7 +173,7 @@ class Authentication {
       // The firebase.auth.AuthCredential type that was used.
       const credential = error.credential;
       // ...
-      console.log(errorMessage);
+      console.error('google login error', errorMessage);
     }
   }
 

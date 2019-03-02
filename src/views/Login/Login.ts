@@ -4,7 +4,7 @@ import firebase from '@/api/firebase';
 @Component({})
 export default class Login extends Vue {
   private async login() {
-    await firebase.auth.login();
+    await firebase.auth.googleLogin();
     this.$store.commit('login');
   }
 }

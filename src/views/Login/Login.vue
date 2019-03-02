@@ -1,12 +1,8 @@
 <template>
   <div class="login-root">
-    <div class="introduction">안녕하세요 나만의 공간
+    <div class="introduction">안녕하세요
       <br>e-home 입니다
     </div>
-    <!--form-->
-    <!--input(type="text" placeholder="id")-->
-    <!--input(type="password" placeholder="password")-->
-    <!--input(type="submit" value="로그인")-->
     <v-btn color="info" @click="login">구글로 로그인</v-btn>
   </div>
 </template>
