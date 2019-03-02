@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import firebase from './initializingFirebase';
 // import database from './cloudFireStore';
+import { UserData } from '@/api/class/User';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const database = firebase.firestore();
@@ -12,7 +13,7 @@ class Authentication {
         .collection('users')
         .doc(user.uid)
         .set({
-          uid: user.uid
+          uid: user.uid,
         })
         .then(() => {
           console.log('Document successfully written!');
@@ -20,7 +21,79 @@ class Authentication {
         .catch(error => {
           console.error('Error writing document: ', error);
         });
-    }
+    },
+    create(userData: UserData): Promise<void> {
+      return new Promise((resolve, reject) => {
+        database
+          .collection('users')
+          .doc(userData.uid)
+          .set(userData)
+          .then(() => {
+            console.log('Document(userData) successfully written!');
+            resolve();
+          })
+          .catch(error => {
+            console.error('Error writing document(userData): ', error);
+            reject(error);
+          });
+      });
+    },
+    read(uid: string): Promise<UserData> {
+      return new Promise((resolve, reject) => {
+        database
+          .collection('users')
+          .doc(uid)
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              console.log('Document data(userData):', doc.data());
+              resolve(doc.data() as UserData);
+            } else {
+              // doc.data() will be undefined in this case
+              console.log('No such document(userData)!');
+              reject(new Error('No such document(userData)!'));
+            }
+          })
+          .catch(error => {
+            console.log('Error getting document(userData):', error);
+            reject(error);
+          });
+      });
+    },
+    // updatedAt 변경하는 함수
+    update(userData: UserData): Promise<void> {
+      return new Promise((resolve, reject) => {
+        database
+          .collection('users')
+          .doc(userData.uid)
+          .update({
+            updatedAt: userData.updatedAt,
+          })
+          .then(() => {
+            console.log('Document(userData) successfully updated!');
+            resolve();
+          })
+          .catch(error => {
+            // The document probably doesn't exist.
+            console.error('Error updating document(userData): ', error);
+            reject(error);
+          });
+      });
+    },
+    delete(uid: string): Promise<void> {
+      return new Promise((resolve, reject) => {
+        database
+          .collection('users')
+          .doc(uid)
+          .delete()
+          .then(() => {
+            console.log('Document successfully deleted!');
+          })
+          .catch(error => {
+            console.error('Error removing document: ', error);
+          });
+      });
+    },
   };
 
   private userOnlineListener: null | (() => void) = null;
