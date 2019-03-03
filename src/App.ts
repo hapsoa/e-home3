@@ -1,7 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import _ from 'lodash';
-import firebase from './api/firebase';
-// import HelloWorld from '@/components/HelloWorld/HelloWorld.vue';
+// import firebase from './api/firebase';
+import { User } from '@/api/class';
 
 @Component({
   components: {
@@ -12,14 +12,14 @@ export default class App extends Vue {
   private drawer: null = null;
 
   private logout() {
-    firebase.auth.logout();
-    this.$store.commit('logout');
+    (User.getInstance() as User).logout();
+    // this.$store.commit('logout');
     this.$router.push('/login');
   }
 
   private beforeCreate() {
-    firebase.auth.setUserOnlineListener(() => {
-      this.$store.commit('login');
+    User.setAuthOnListener(() => {
+      // this.$store.commit('login');
       this.$store.commit('shotMethods');
       this.$store.commit('endLoading');
       // login page일 때
@@ -27,9 +27,10 @@ export default class App extends Vue {
         this.$router.push('/');
       }
     });
-    firebase.auth.setUserOfflineListener(() => {
-      this.$store.commit('logout');
+    User.setAuthOffListener(() => {
+      // this.$store.commit('logout');
       this.$store.commit('endLoading');
+
       this.$router.push('/login');
     });
   }

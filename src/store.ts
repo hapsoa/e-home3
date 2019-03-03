@@ -11,7 +11,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLogin: false,
+    isLogin: !_.isNil(User.getInstance()),
     savedMethods: [] as any,
     isLoading: true,
     lastDiaryIndex: -1

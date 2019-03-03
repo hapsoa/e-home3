@@ -98,8 +98,8 @@ class Authentication {
     }
   };
 
-  private userOnlineListener: null | (() => void) = null;
-  private userOfflineListener: null | (() => void) = null;
+  private authOnListener: null | (() => void) = null;
+  private authOffListener: null | (() => void) = null;
   private logoutListener: null | (() => void) = null;
 
   constructor() {
@@ -108,26 +108,26 @@ class Authentication {
       if (user) {
         // User is signed in.
         // this.router.push('/');
-        if (!_.isNil(this.userOnlineListener)) {
-          this.userOnlineListener();
+        if (!_.isNil(this.authOnListener)) {
+          this.authOnListener();
         }
       } else {
         // No user is signed in.
         // this.router.push('/login');
         // eslint-disable-next-line no-lonely-if
-        if (!_.isNil(this.userOfflineListener)) {
-          this.userOfflineListener();
+        if (!_.isNil(this.authOffListener)) {
+          this.authOffListener();
         }
       }
     });
   }
 
-  public setUserOnlineListener(listener: () => void) {
-    this.userOnlineListener = listener;
+  public setAuthOnListener(listener: () => void) {
+    this.authOnListener = listener;
   }
 
-  public setUserOfflineListener(listener: () => void) {
-    this.userOfflineListener = listener;
+  public setAuthOffListener(listener: () => void) {
+    this.authOffListener = listener;
   }
 
   public async googleLogin() {
@@ -138,9 +138,6 @@ class Authentication {
       // const token = result.credential.accessToken;
       // The signed-in user info.
       if (!_.isNil(result.user)) {
-        const uid = result.user.uid;
-        // console.log('result.user', result.user);
-
         try {
           // update를 시도하고, 실패하면 create 한다.
           // uid에 해당하는 녀석에 updatedAt만 바꾼다.
