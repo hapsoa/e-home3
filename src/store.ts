@@ -7,7 +7,19 @@ import { User } from '@/api/class';
 
 Vue.use(Vuex);
 
-// const state: { user: User | null } = { user: null };
+// const state: {
+//   user: User | null;
+//   isLogin: boolean;
+//   savedMethods: [];
+//   isLoading: boolean;
+//   lastDiaryIndex: number;
+// } = {
+//   user: null,
+//   isLogin: false,
+//   savedMethods: [],
+//   isLoading: true,
+//   lastDiaryIndex: -1
+// };
 
 export default new Vuex.Store({
   state: {
