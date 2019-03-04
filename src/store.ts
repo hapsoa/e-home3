@@ -7,27 +7,22 @@ import { User } from '@/api/class';
 
 Vue.use(Vuex);
 
-// const state: {
-//   user: User | null;
-//   isLogin: boolean;
-//   savedMethods: [];
-//   isLoading: boolean;
-//   lastDiaryIndex: number;
-// } = {
-//   user: null,
-//   isLogin: false,
-//   savedMethods: [],
-//   isLoading: true,
-//   lastDiaryIndex: -1
-// };
+const initState: {
+  user: User | null;
+  isLogin: boolean;
+  savedMethods: any[];
+  isLoading: boolean;
+  lastDiaryIndex: number;
+} = {
+  user: null,
+  isLogin: false,
+  savedMethods: [],
+  isLoading: true,
+  lastDiaryIndex: -1
+};
 
 export default new Vuex.Store({
-  state: {
-    isLogin: !_.isNil(User.getInstance()),
-    savedMethods: [] as any,
-    isLoading: true,
-    lastDiaryIndex: -1
-  },
+  state: initState,
   mutations: {
     login(state) {
       state.isLogin = true;
