@@ -20,7 +20,7 @@ export default new Router({
     {
       path: '/diary',
       name: 'diary',
-      component: () => import('@/views/diary/DiaryHome/DiaryHome.vue'),
+      component: () => import('@/views/diary/DiaryHome'),
     },
   ],
 });
