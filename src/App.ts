@@ -1,7 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import _ from 'lodash';
 // import firebase from './api/firebase';
-import { User } from '@/api/class';
+import { User } from '@/form/class';
 
 @Component({
   components: {

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import firebase from './initializingFirebase';
 // import database from './cloudFireStore';
-import { UserData } from '@/api/class/User';
+import { UserData } from '@/form/class/User';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const database = firebase.firestore();

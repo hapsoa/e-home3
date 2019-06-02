@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import firebase from '@/api/firebase';
+import firebase from '@/form/firebase';
 
 @Component({})
 export default class Login extends Vue {

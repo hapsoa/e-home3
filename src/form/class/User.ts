@@ -1,4 +1,4 @@
-import firebase from '@/api/firebase';
+import firebase from '@/form/firebase';
 
 export interface UserData {
   uid: string | null;

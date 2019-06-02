@@ -1,75 +1,18 @@
 // style-weather-cms 에서 가져온 양식대로 바꾸기.
-// import _ from 'lodash';
-// import firebase from './initializingFirebase';
+import _ from 'lodash';
+import firebase from './initializingFirebase';
 // import { ClothData, MajorClass } from '@/api/class/Cloth';
 
-// const provider = new firebase.auth.GoogleAuthProvider();
-// const database = firebase.firestore();
-// const storage = firebase.storage();
-// const storageRef = firebase.storage().ref();
-// const clothRef = storageRef.child('cloth');
-// // var spaceRef = imagesRef.child(fileName);
+const provider = new firebase.auth.GoogleAuthProvider();
+const database = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = firebase.storage().ref();
+const diaryRef = storageRef.child('diary');
+// var spaceRef = imagesRef.child(fileName);
+
 // let nextDocuments: firebase.firestore.Query | null = null;
 
-// class ClothApi {
-//   private static getQueryRef(queryObject: {
-//     numOfClothes: number;
-//     searchInput: string;
-//     majorClass: string | null;
-//     minorClass: string | null;
-//   }): firebase.firestore.Query {
-//     let queryRef: firebase.firestore.Query;
-//     if (queryObject.searchInput !== '') {
-//       if (queryObject.majorClass !== null) {
-//         if (queryObject.minorClass !== null) {
-//           queryRef = database
-//             .collection('clothes')
-//             .where('majorClass', '==', queryObject.majorClass)
-//             .where('minorClass', '==', queryObject.minorClass)
-//             .where('hashtags', 'array-contains', queryObject.searchInput);
-//         } else {
-//           queryRef = database
-//             .collection('clothes')
-//             .where('majorClass', '==', queryObject.majorClass)
-//             .where('hashtags', 'array-contains', queryObject.searchInput);
-//         }
-//       } else {
-//         if (queryObject.minorClass !== null) {
-//           queryRef = database
-//             .collection('clothes')
-//             .where('minorClass', '==', queryObject.minorClass)
-//             .where('hashtags', 'array-contains', queryObject.searchInput);
-//         } else {
-//           console.log('yapa');
-//           queryRef = database
-//             .collection('clothes')
-//             .where('hashtags', 'array-contains', queryObject.searchInput);
-//         }
-//       }
-//     } else {
-//       if (queryObject.majorClass !== null) {
-//         if (queryObject.minorClass !== null) {
-//           queryRef = database
-//             .collection('clothes')
-//             .where('majorClass', '==', queryObject.majorClass)
-//             .where('minorClass', '==', queryObject.minorClass);
-//         } else {
-//           queryRef = database
-//             .collection('clothes')
-//             .where('majorClass', '==', queryObject.majorClass);
-//         }
-//       } else {
-//         if (queryObject.minorClass !== null) {
-//           queryRef = database
-//             .collection('clothes')
-//             .where('minorClass', '==', queryObject.minorClass);
-//         } else {
-//           queryRef = database.collection('clothes');
-//         }
-//       }
-//     }
-//     return queryRef;
-//   }
+// class DiaryApi {
 //   public db = {
 //     // crud
 //     create(clothData: ClothData): Promise<void> {

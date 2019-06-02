@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import _ from 'lodash';
 // import firebase from '@/firebase';
-import { User } from '@/api/class';
+import { User } from '@/form/class';
 
 Vue.use(Vuex);
 
