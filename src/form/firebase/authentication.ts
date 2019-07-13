@@ -26,7 +26,7 @@ class Authentication {
       return new Promise((resolve, reject) => {
         database
           .collection('users')
-          .doc(userData.uid as string)
+          .doc(userData.id)
           .set(userData)
           .then(() => {
             console.log('Document(userData) successfully written!');
@@ -144,9 +144,9 @@ class Authentication {
         console.log(error);
         const currentTime = new Date().getTime();
         const newUserData: UserData = {
-          uid: resultUser.uid,
-          email: resultUser.email,
-          nickname: resultUser.displayName,
+          id: resultUser.uid,
+          email: resultUser.email as string,
+          nickname: resultUser.displayName as string,
           createdAt: currentTime,
           updatedAt: currentTime
         };

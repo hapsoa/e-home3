@@ -45,7 +45,7 @@ export default class CreatingDiary extends Vue {
     // 새로 글 쓰는 상황일 때
     if (_.isNil(this.$route.query.diaryId)) {
       try {
-        this.diary.saveForCreate(this.$store.state.user.data.uid);
+        this.diary.saveForCreate(this.$store.state.myUser.data.uid);
         //     firebase.database.setDiary({
         //       title: this.diaryTitle,
         //       contents: this.diaryContents,

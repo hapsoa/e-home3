@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar dense app flat v-if="$store.state.user">
+    <v-toolbar dense app flat v-if="$store.state.myUser">
       <v-toolbar-side-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="headline" @click="$router.push({name: 'home'})">
         <span>e-home</span>
@@ -22,7 +22,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-navigation-drawer app v-model="drawer" v-if="$store.state.user">
+    <v-navigation-drawer app v-model="drawer" v-if="$store.state.myUser">
       <v-toolbar flat>
         <v-list>
           <v-list-tile>

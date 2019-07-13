@@ -4,11 +4,11 @@
       <v-btn flat icon color="#aaa" @click="reviseDiary">
         <v-icon>create</v-icon>
       </v-btn>
-      <icon-modal
+      <!-- <icon-modal
         :cardTitle="'일기 삭제'"
         :cardText="'일기를 삭제하시겠습니까? 삭제를 하시면 복원할 수 없습니다.'"
         :agreeListener="deleteDiary"
-      />
+      />-->
     </div>
     <div class="detail-view" v-html="diaryData.contents"></div>
     <v-btn color="#bbb" @click="$router.go(-1)">돌아가기</v-btn>

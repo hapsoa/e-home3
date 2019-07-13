@@ -37,7 +37,7 @@ export default class DiaryDetail extends Vue {
   }
 
   private created() {
-    if (!_.isNil(firebase.auth.getCurrentUser())) {
+    if (!_.isNil(this.$store.state.myUser)) {
       this.initializeView();
     } else {
       this.$store.commit('saveMethod', this.initializeView);

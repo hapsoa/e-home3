@@ -1,11 +1,11 @@
 import firebase from '@/form/firebase';
 
 export interface UserData {
-  uid: string | null;
-  email: string | null;
-  nickname: string | null;
-  createdAt: number | null;
-  updatedAt: number | null;
+  id: string;
+  email: string;
+  nickname: string;
+  createdAt: number;
+  updatedAt: number;
 }
 
 // user instance는 한개. vuex에 하나 있을듯.

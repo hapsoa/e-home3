@@ -8,13 +8,13 @@ import { User } from '@/form/class';
 Vue.use(Vuex);
 
 const initState: {
-  user: User | null;
+  myUser: User | null | undefined; // 로그인상태 | 로그인안된 상태 | 유저정보 확인이 아직 안된 상태
   isLogin: boolean;
   savedMethods: Array<() => void>;
   isLoading: boolean;
   lastDiaryIndex: number;
 } = {
-  user: null,
+  myUser: undefined,
   isLogin: false,
   savedMethods: [],
   isLoading: true,
@@ -26,7 +26,7 @@ export default new Vuex.Store({
   mutations: {
     login(state, user) {
       state.isLogin = true;
-      state.user = user;
+      state.myUser = user;
     },
     logout(state) {
       state.isLogin = false;
