@@ -1,16 +1,16 @@
 <template>
   <div class="diary-root">
     <nav>
-      <input type="text" placeholder="search">
-      <v-btn color="info" @click="$router.push({name: 'writing-diary'})">일기 쓰기</v-btn>
+      <input type="text" placeholder="search" />
+      <v-btn color="info" @click="$router.push({name: 'creating-diary'})">일기 쓰기</v-btn>
     </nav>
     <div class="diaries">
       <div
         class="diary"
         v-for="(diary) in diaries"
-        :key="diary.id"
-        @click="lookDiary(diary.id)"
-      >{{diary.title}}</div>
+        :key="diary.data.id"
+        @click="lookDiary(diary.data.id)"
+      >{{diary.data.title}}</div>
     </div>
     <div class="text-xs-center">
       <v-pagination v-model="page" :length="pageLength"></v-pagination>

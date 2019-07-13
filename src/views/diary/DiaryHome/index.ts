@@ -1,2 +1,2 @@
-import DiaryHome from './DiaryHome.vue';
+import DiaryHome from './DiaryHome';
 export default DiaryHome;

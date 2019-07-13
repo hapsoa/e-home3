@@ -1,6 +1,8 @@
 // style-weather-cms 에서 가져온 양식대로 바꾸기.
 import _ from 'lodash';
 import firebase from './initializingFirebase';
+import { DiaryData } from '../class/Diary';
+import DefaultApi from './DefaultApi';
 // import { ClothData, MajorClass } from '@/api/class/Cloth';
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -271,4 +273,53 @@ const diaryRef = storageRef.child('diary');
 //   };
 // }
 
-// export default new ClothApi();
+// db, storage
+class DiaryApi extends DefaultApi<DiaryData> {
+  //
+  constructor() {
+    super('diaries');
+  }
+
+  public update(data: DiaryData): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.dbCollection
+        .doc(data.id)
+        .update({
+          title: data.title,
+          content: data.content
+        })
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
+  public readByUserId(userId: string): Promise<DiaryData[]> {
+    return new Promise((resolve, reject) => {
+      console.log('readByUserId start', userId);
+      this.dbCollection
+        .where('uid', '==', userId)
+        .get()
+        .then(querySnapshot => {
+          console.log('querySnapshot', querySnapshot);
+          const datas: DiaryData[] = [];
+          querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, ' => ', doc.data());
+            datas.push(doc.data() as DiaryData);
+          });
+          resolve(datas);
+        })
+        .catch(error => {
+          console.error('Error getting documents: ', error);
+          reject(error);
+        });
+    });
+  }
+}
+
+const diaryApi = new DiaryApi();
+export default diaryApi;

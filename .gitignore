@@ -23,5 +23,3 @@ yarn-error.log*
 
 # customizing
 src/form/firebase/initializingFirebase.ts
-./src/form/firebase/initializingFirebase.ts
-/src/form/firebase/initializingFirebase.ts

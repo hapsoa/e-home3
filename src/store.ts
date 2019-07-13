@@ -10,7 +10,7 @@ Vue.use(Vuex);
 const initState: {
   user: User | null;
   isLogin: boolean;
-  savedMethods: any[];
+  savedMethods: Array<() => void>;
   isLoading: boolean;
   lastDiaryIndex: number;
 } = {
@@ -24,8 +24,9 @@ const initState: {
 export default new Vuex.Store({
   state: initState,
   mutations: {
-    login(state) {
+    login(state, user) {
       state.isLogin = true;
+      state.user = user;
     },
     logout(state) {
       state.isLogin = false;
@@ -38,7 +39,6 @@ export default new Vuex.Store({
         _.forEach(state.savedMethods, method => method());
         console.log('saved methods are shot');
       }
-
       state.savedMethods = [];
     },
     startLoading(state) {

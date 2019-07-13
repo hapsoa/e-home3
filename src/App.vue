@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-toolbar dense app flat v-if="$store.state.isLogin">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
+    <v-toolbar dense app flat v-if="$store.state.user">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="headline" @click="$router.push({name: 'home'})">
         <span>e-home</span>
         <!-- <span class="font-weight-light">MATERIAL DESIGN</span> -->
@@ -22,7 +22,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-navigation-drawer app v-model="drawer" v-if="$store.state.isLogin">
+    <v-navigation-drawer app v-model="drawer" v-if="$store.state.user">
       <v-toolbar flat>
         <v-list>
           <v-list-tile>
@@ -58,7 +58,7 @@
     </v-navigation-drawer>
 
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
   </v-app>
 </template>

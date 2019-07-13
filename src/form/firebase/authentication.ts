@@ -98,7 +98,7 @@ class Authentication {
     }
   };
 
-  private authOnListener: null | (() => void) = null;
+  private authOnListener: null | ((firebaseUser: firebase.User) => void) = null;
   private authOffListener: null | (() => void) = null;
   private logoutListener: null | (() => void) = null;
 
@@ -109,7 +109,7 @@ class Authentication {
         // User is signed in.
         // this.router.push('/');
         if (!_.isNil(this.authOnListener)) {
-          this.authOnListener();
+          this.authOnListener(user);
         }
       } else {
         // No user is signed in.
@@ -122,7 +122,7 @@ class Authentication {
     });
   }
 
-  public setAuthOnListener(listener: () => void) {
+  public setAuthOnListener(listener: (firebaseUser: firebase.User) => void) {
     this.authOnListener = listener;
   }
 
@@ -130,47 +130,40 @@ class Authentication {
     this.authOffListener = listener;
   }
 
-  public async googleLogin() {
+  public async googleLogin(): Promise<UserData> {
     try {
       const result = await firebase.auth().signInWithPopup(provider);
-      console.log('google login');
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // const token = result.credential.accessToken;
-      // The signed-in user info.
-      if (!_.isNil(result.user)) {
-        try {
-          // update를 시도하고, 실패하면 create 한다.
-          // uid에 해당하는 녀석에 updatedAt만 바꾼다.
-          await this.db.update(result.user.uid);
-        } catch (error) {
-          console.log(error);
-          const currentTime = new Date().getTime();
-          const newUserData: UserData = {
-            uid: result.user.uid,
-            email: result.user.email,
-            nickname: null,
-            createdAt: currentTime,
-            updatedAt: currentTime
-          };
-          // 새로 회원가입을 한다.
-          await this.db.create(newUserData);
-        }
-      } else {
-        throw new Error('googleLogin() result.user is null');
+      const resultUser = result.user as firebase.User;
+      try {
+        // update를 시도하고, 실패하면 create 한다.
+        // uid에 해당하는 녀석에 updatedAt만 바꾼다.
+        await this.db.update(resultUser.uid);
+        const userData: UserData = await this.db.read(resultUser.uid);
+        return userData;
+      } catch (error) {
+        console.log(error);
+        const currentTime = new Date().getTime();
+        const newUserData: UserData = {
+          uid: resultUser.uid,
+          email: resultUser.email,
+          nickname: resultUser.displayName,
+          createdAt: currentTime,
+          updatedAt: currentTime
+        };
+        // 새로 회원가입을 한다.
+        await this.db.create(newUserData);
+        return newUserData;
       }
 
       // this.db.loginUser(user);
       // this.db.update(result.user);
     } catch (error) {
-      // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
       const email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
       const credential = error.credential;
-      // ...
-      console.error('google login error', errorMessage);
+      console.error('google login error', errorCode, errorMessage);
+      return Promise.reject(error);
     }
   }
 

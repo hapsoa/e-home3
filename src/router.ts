@@ -10,17 +10,27 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/Home/Home.vue'),
+      component: () => import('@/views/Home/Home.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/Login/Login.vue'),
+      component: () => import('@/views/Login/Login.vue')
     },
     {
       path: '/diary',
       name: 'diary',
-      component: () => import('@/views/diary/DiaryHome'),
+      component: () => import('@/views/diary/DiaryHome')
     },
-  ],
+    {
+      path: '/creating-diary',
+      name: 'creating-diary',
+      component: () => import('@/views/diary/CreatingDiary')
+    },
+    {
+      path: '/diary-detail',
+      name: 'diary-detail',
+      component: () => import('@/views/diary/DiaryDetail')
+    }
+  ]
 });
