@@ -22,4 +22,4 @@ yarn-error.log*
 
 
 # customizing
-src/api/firebase/initializingFirebase.ts
+src/form/firebase/initializingFirebase.ts
