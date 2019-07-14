@@ -275,32 +275,36 @@ const diaryRef = storageRef.child('diary');
 
 // db, storage
 class DiaryApi extends DefaultApi<DiaryData> {
+
+
+
   //
   constructor() {
     super('diaries');
-  }
 
-  public update(data: DiaryData): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.dbCollection
-        .doc(data.id)
-        .update({
-          title: data.title,
-          content: data.content
-        })
-        .then(() => {
-          resolve();
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    this.db.update = (data: DiaryData): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        // content는 storage에 저장한다.
+        this.db.collection
+          .doc(data.id)
+          .update({
+            title: data.title,
+            content: data.content
+          })
+          .then(() => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    };
   }
 
   public readByUserId(userId: string): Promise<DiaryData[]> {
     return new Promise((resolve, reject) => {
       console.log('readByUserId start', userId);
-      this.dbCollection
+      this.db.collection
         .where('uid', '==', userId)
         .get()
         .then(querySnapshot => {

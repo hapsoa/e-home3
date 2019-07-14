@@ -25,7 +25,7 @@ export default class Diary {
   }
 
   public static async get(diaryId: string) {
-    const diaryData: DiaryData = await firebase.diaryApi.read(diaryId);
+    const diaryData: DiaryData = await firebase.diaryApi.db.read(diaryId);
     const diary = new Diary(diaryData);
     return diary;
   }
@@ -47,9 +47,9 @@ export default class Diary {
   public saveForCreate(userId: string) {
     this.data.uid = userId;
     this.data.date = new Date().getTime();
-    firebase.diaryApi.create(this.data);
+    firebase.diaryApi.db.create(this.data);
   }
   public saveForUpdate() {
-    firebase.diaryApi.update(this.data);
+    firebase.diaryApi.db.update(this.data);
   }
 }

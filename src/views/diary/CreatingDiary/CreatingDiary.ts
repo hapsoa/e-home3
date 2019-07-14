@@ -56,9 +56,6 @@ export default class CreatingDiary extends Vue {
 
     this.$router.push({ name: 'diary' });
   }
-  private showCkeditorContents() {
-    console.log(this.editorData);
-  }
 }
 
 // export default {
