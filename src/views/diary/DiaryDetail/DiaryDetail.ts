@@ -9,22 +9,24 @@ import { Diary } from '@/form/class';
   // components: { IconModal }
 })
 export default class DiaryDetail extends Vue {
-  private id: string = this.$route.query.id as string;
-  private diary!: Diary;
+  // private id: string = this.$route.query.id as string;
+  private diary: Diary = Diary.create();
   private diaryData = {};
   private dialog: boolean = false;
 
   private async initializeView() {
-    this.diary = await Diary.get(this.id);
-    // this.diaryData.contents = this.diaryData.contents.split(/\n|\r|↵/).join('<br>');
+    console.log('initView');
+    this.diary = await Diary.get(this.$route.query.id as string);
+    console.log('this.diary', this.diary);
+    this.diary.data.content = this.diary.data.content.split(/\n|\r|↵/).join('<br>');
   }
   private reviseDiary() {
     console.log('devise diary');
     this.$router.push({
-      name: 'writing-diary', query: {
-        diaryData: this.diaryData,
-        diaryId: this.id,
-      } as any
+      name: 'creating-diary',
+      query: {
+        diaryId: this.$route.query.id
+      }
     });
   }
   private async deleteDiary() {
@@ -45,45 +47,4 @@ export default class DiaryDetail extends Vue {
   }
 }
 
-// {
-//   components: {
 
-//   },
-//   data(): any {
-//     return {
-//       id: this.$route.query.id,
-//       diaryData: {},
-//       dialog: false,
-//     };
-//   },
-//   methods: {
-//     async initializeView() {
-//       this.diaryData = await this.$firebase.database.getDiary(this.id);
-//       this.diaryData.contents = this.diaryData.contents.split(/\n|\r|↵/).join('<br>');
-//     },
-//     reviseDiary() {
-//       console.log('devise diary');
-//       this.$router.push({
-//         name: 'writing-diary', query: {
-//           diaryData: this.diaryData,
-//           diaryId: this.id,
-//         } as any
-//       });
-//     },
-//     async deleteDiary() {
-//       try {
-//         await firebase.database.deleteDiary(this.id);
-//         this.$router.push({ name: 'diary' });
-//       } catch (error) {
-//         console.error('Error removing diary: ', error);
-//       }
-//     },
-//   },
-//   created() {
-//     if (!_.isNil(firebase.auth.getCurrentUser())) {
-//       this.initializeView();
-//     } else {
-//       this.$store.commit('saveMethod', this.initializeView);
-//     }
-//   },
-// };

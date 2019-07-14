@@ -21,26 +21,5 @@
 <script lang="ts" src='./DiaryHome.ts'/>
 
 <style scoped lang="scss">
-.diary-root {
-  width: 100%;
-  height: 100%;
-  > nav {
-    text-align: center;
-    border-bottom: 1px solid #aaa;
-    padding: 10px 0;
-    > button {
-      margin-left: 20px;
-    }
-  }
-  > .diaries {
-    > .diary {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      cursor: pointer;
-      &:hover {
-        background-color: #ccc;
-      }
-    }
-  }
-}
+@import './DiaryHome.scss';
 </style>

@@ -31,16 +31,12 @@ export default class Diary {
   }
 
   public static async getByUserId(userId: string) {
-    console.log('getByUserId start');
     const diaryDatas: DiaryData[] = await firebase.diaryApi.readByUserId(
       userId
     );
     const diaries = _.map(diaryDatas, diaryData => new Diary(diaryData));
-    console.log('getByUserId end');
     return diaries;
   }
-
-
 
   public data!: DiaryData;
 
@@ -48,15 +44,12 @@ export default class Diary {
     this.data = data;
   }
 
-
-
   public saveForCreate(userId: string) {
     this.data.uid = userId;
     this.data.date = new Date().getTime();
     firebase.diaryApi.create(this.data);
   }
   public saveForUpdate() {
-    //
     firebase.diaryApi.update(this.data);
   }
 }

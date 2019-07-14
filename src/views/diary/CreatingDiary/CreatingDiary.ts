@@ -6,15 +6,8 @@ import { Diary } from '@/form/class';
 
 @Component({})
 export default class CreatingDiary extends Vue {
-  // private diaryTitle: string = '';
   private diaryDate: string = new Date().toLocaleDateString() + '(시간포함)';
-  // private diaryContents: string = '';
-  private diary!: Diary;
-
-  private editorData: string = '';
-  private editorConfig = {
-    // The configuration of the editor.
-  };
+  private diary: Diary = Diary.create();
 
   private editorType: string = 'normal-editor'; // normal-editor, ...
 
