@@ -15,63 +15,7 @@ const diaryRef = storageRef.child('diary');
 // let nextDocuments: firebase.firestore.Query | null = null;
 
 // class DiaryApi {
-//   public db = {
-//     // crud
-//     create(clothData: ClothData): Promise<void> {
-//       return new Promise((resolve, reject) => {
-//         database
-//           .collection('clothes')
-//           .doc(clothData.id as string)
-//           .set(clothData)
-//           .then(() => {
-//             console.log('Document(clothData) successfully written!');
-//             resolve();
-//           })
-//           .catch(error => {
-//             console.error('Error writing document(clothData): ', error);
-//             reject(error);
-//           });
-//       });
-//     },
-//     read(clothId: string): Promise<ClothData> {
-//       return new Promise((resolve, reject) => {
-//         database
-//           .collection('clothes')
-//           .doc(clothId)
-//           .get()
-//           .then(doc => {
-//             if (doc.exists) {
-//               // console.log('Document data(userData):', doc.data());
-//               resolve(doc.data() as ClothData);
-//             } else {
-//               // doc.data() will be undefined in this case
-//               console.log('No such document(clothData)!');
-//               reject(new Error('No such document(clothData)!'));
-//             }
-//           })
-//           .catch(error => {
-//             console.log('Error getting document(clothData):', error);
-//             reject(error);
-//           });
-//       });
-//     },
-//     // update() 필요하지않고, 덮어쓰기(create)하면 되지 않을까
-//     delete(clothId: string): Promise<void> {
-//       return new Promise((resolve, reject) => {
-//         database
-//           .collection('clothes')
-//           .doc(clothId)
-//           .delete()
-//           .then(() => {
-//             console.log('Document(clothData) successfully deleted!');
-//             resolve();
-//           })
-//           .catch(error => {
-//             console.error('Error removing document(clothData): ', error);
-//             reject(error);
-//           });
-//       });
-//     },
+
 //     readDocumentsByRecent(numOfDocuments: number): Promise<ClothData[]> {
 //       return new Promise((resolve, reject) => {
 //         if (_.isNil(nextDocuments)) {

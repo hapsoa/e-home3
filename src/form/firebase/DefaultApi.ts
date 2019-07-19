@@ -16,7 +16,7 @@ interface Database<T> {
 export default abstract class DefaultApi<T extends DefaultData> {
 
   public db: Database<T> = {
-    collection: database.collection(''),
+    collection: database.collection('defaultCollection'),
     create(data: T): Promise<void> {
       return new Promise((resolve, reject) => {
         this.collection
