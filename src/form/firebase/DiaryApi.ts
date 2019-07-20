@@ -1,4 +1,4 @@
-// style-weather-cms 에서 가져온 양식대로 바꾸기.
+// TODO style-weather-cms 에서 가져온 양식대로 바꾸기.
 import _ from 'lodash';
 import firebase from './initializingFirebase';
 import { DiaryData } from '../class/Diary';
@@ -15,7 +15,6 @@ const diaryRef = storageRef.child('diary');
 // let nextDocuments: firebase.firestore.Query | null = null;
 
 // class DiaryApi {
-
 //     readDocumentsByRecent(numOfDocuments: number): Promise<ClothData[]> {
 //       return new Promise((resolve, reject) => {
 //         if (_.isNil(nextDocuments)) {
@@ -219,21 +218,16 @@ const diaryRef = storageRef.child('diary');
 
 // db, storage
 class DiaryApi extends DefaultApi<DiaryData> {
-
-
-
-  //
   constructor() {
     super('diaries');
 
-    this.db.update = (data: DiaryData): Promise<void> => {
+    this.db.update = (id: string, data: DiaryData): Promise<void> => {
       return new Promise((resolve, reject) => {
         // content는 storage에 저장한다.
         this.db.collection
-          .doc(data.id)
+          .doc(id)
           .update({
             title: data.title,
-            content: data.content
           })
           .then(() => {
             resolve();

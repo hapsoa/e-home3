@@ -15,7 +15,7 @@
         />-->
       </div>
 
-      <div class="detail-view" v-html="diary.data.content"></div>
+      <div class="detail-view" v-html="diary.content"></div>
       <v-layout justify-end>
         <v-btn color="#bbb" @click="$router.go(-1)">돌아가기</v-btn>
       </v-layout>

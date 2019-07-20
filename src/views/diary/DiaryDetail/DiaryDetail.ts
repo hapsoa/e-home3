@@ -18,7 +18,7 @@ export default class DiaryDetail extends Vue {
     console.log('initView');
     this.diary = await Diary.get(this.$route.query.id as string);
     console.log('this.diary', this.diary);
-    this.diary.data.content = this.diary.data.content.split(/\n|\r|↵/).join('<br>');
+    this.diary.content = this.diary.content.split(/\n|\r|↵/).join('<br>');
   }
   private reviseDiary() {
     console.log('devise diary');

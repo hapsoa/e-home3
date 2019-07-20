@@ -1,15 +1,13 @@
 import uuidv1 from 'uuid/v1';
-import { DefaultData } from '../firebase/DefaultApi';
 import firebase from '../firebase';
 import _ from 'lodash';
 
-export interface DiaryData extends DefaultData {
+export interface DiaryData {
   id: string;
   uid: string;
   date: number;
   index: number;
   title: string;
-  content: string;
 }
 
 export default class Diary {
@@ -20,7 +18,6 @@ export default class Diary {
       date: 0,
       index: 0,
       title: '',
-      content: ''
     });
   }
 
@@ -39,6 +36,7 @@ export default class Diary {
   }
 
   public data!: DiaryData;
+  public content: string = '';
 
   private constructor(data: DiaryData) {
     this.data = data;
@@ -47,9 +45,9 @@ export default class Diary {
   public saveForCreate(userId: string) {
     this.data.uid = userId;
     this.data.date = new Date().getTime();
-    firebase.diaryApi.db.create(this.data);
+    firebase.diaryApi.db.create(this.data.id, this.data);
   }
   public saveForUpdate() {
-    firebase.diaryApi.db.update(this.data);
+    firebase.diaryApi.db.update(this.data.id, this.data);
   }
 }
