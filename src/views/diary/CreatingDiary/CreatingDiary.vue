@@ -5,7 +5,7 @@
       <input type="text" v-model="diary.data.title" :placeholder="diaryDate" />
     </form>
     <div class="editors">
-      <textarea v-if="editorType === 'normal-editor'" v-model="diary.data.content" />
+      <textarea v-if="editorType === 'normal-editor'" v-model="diary.content" />
     </div>
     <div class="controller">
       <v-btn @click="$router.go(-1)" flat>취소</v-btn>

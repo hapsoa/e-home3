@@ -87,13 +87,28 @@ export default abstract class DefaultApi<T extends DefaultData> {
 
   public storage = {
     ref: storage.ref().child('defaultRef'),
-    create(id: string, file: File | Blob): Promise<void> {
+    createFile(id: string, file: File | Blob): Promise<void> {
       return new Promise((resolve, reject) => {
         this.ref
           .child(id)
           .put(file)
           .then(snapshot => {
             console.log('Uploaded a blob or file!');
+            resolve();
+          })
+          .catch(error => {
+            console.error('Error writing storage: ', error);
+            reject(error);
+          });
+      });
+    },
+    createString(id: string, text: string): Promise<void> {
+      return new Promise((resolve, reject) => {
+        this.ref
+          .child(id)
+          .putString(text)
+          .then(snapshot => {
+            console.log('Uploaded a string!');
             resolve();
           })
           .catch(error => {
