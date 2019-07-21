@@ -15,9 +15,7 @@
         />-->
       </div>
 
-      <!-- <div class="detail-view" v-html="diary.content"></div> -->
-      <!-- <iframe :src="diary.content" frameborder="0"></iframe> -->
-      <div class="detail-view">{{diary.content}}</div>
+      <div class="detail-view" v-html="diary.content"></div>
       <v-layout justify-end>
         <v-btn color="#bbb" @click="$router.go(-1)">돌아가기</v-btn>
       </v-layout>

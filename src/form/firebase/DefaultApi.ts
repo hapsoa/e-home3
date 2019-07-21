@@ -125,7 +125,6 @@ export default abstract class DefaultApi<T extends DefaultData> {
           .then(url => {
             // `url` is the download URL for 'images/stars.jpg'
             resolve(url);
-
             // Or inserted into an <img> element:
             // let img = document.getElementById('myimg');
             // img.src = url;
@@ -135,6 +134,27 @@ export default abstract class DefaultApi<T extends DefaultData> {
             console.error('Error getting storage: ', error);
             reject(error);
           });
+      });
+    },
+    readString(id: string): Promise<string> {
+      return new Promise((resolve, reject) => {
+        this.read(id).then(url => {
+          const xmlHttp = new XMLHttpRequest();
+          xmlHttp.onreadystatechange = () => {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+              const response = xmlHttp.responseText; // should have your text
+              console.log('readString() response!@#$%^&', response);
+              resolve(response);
+            }
+            // else {
+            //   reject(new Error('url download failed'));
+            // }
+          };
+          xmlHttp.open('GET', url, true); // true for asynchronous
+          xmlHttp.send(null);
+        }).catch(error => {
+          reject(error);
+        });
       });
     },
     delete(id: string): Promise<void> {
@@ -150,7 +170,7 @@ export default abstract class DefaultApi<T extends DefaultData> {
           .catch(error => {
             // Uh-oh, an error occurred!
             console.error('Error removing storage: ', error);
-            reject();
+            reject(error);
           });
       });
     },

@@ -24,7 +24,8 @@ export default class Diary {
   public static async get(diaryId: string) {
     const diaryData: DiaryData = await firebase.diaryApi.db.read(diaryId);
     const diary = new Diary(diaryData);
-    diary.content = await firebase.diaryApi.storage.read(diary.data.id);
+    // diary.content = await firebase.diaryApi.storage.read(diary.data.id);
+    diary.content = await firebase.diaryApi.storage.readString(diary.data.id);
     return diary;
   }
 
