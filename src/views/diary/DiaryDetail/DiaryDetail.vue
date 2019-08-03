@@ -6,6 +6,9 @@
         <v-btn flat icon color="#aaa" @click="reviseDiary">
           <v-icon>create</v-icon>
         </v-btn>
+        <v-btn flat icon color="#aaa" @click="deleteDiary">
+          <v-icon>delete</v-icon>
+        </v-btn>
       </v-layout>
       <div class="crud-button-zone">
         <!-- <icon-modal

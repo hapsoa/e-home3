@@ -70,4 +70,24 @@ export default class Diary {
       Promise.reject(error);
     }
   }
+
+  /**
+   * 해당 instance의 정보를 db와 storage에서 삭제한다.
+   */
+  public deleteDiary(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const promises = [
+        firebase.diaryApi.db.delete(this.data.id),
+        firebase.diaryApi.storage.delete(this.data.id)
+      ];
+
+      Promise.all(promises)
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 }

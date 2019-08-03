@@ -30,12 +30,21 @@ export default class DiaryDetail extends Vue {
     });
   }
   private async deleteDiary() {
-    // try {
-    //   this.diary.deleteDiary(this.id);
-    //   this.$router.push({ name: 'diary' });
-    // } catch (error) {
-    //   console.error('Error removing diary: ', error);
-    // }
+
+    this.$alertWindow.on({
+      title: 'diary 삭제',
+      message: '일기를 삭제하시겠습니까?',
+      positive: '네',
+      negative: '아니오',
+      positiveAction: () => {
+        try {
+          this.diary.deleteDiary();
+          this.$router.push({ name: 'diary' });
+        } catch (error) {
+          console.error('Error removing diary: ', error);
+        }
+      }
+    });
   }
 
   private created() {

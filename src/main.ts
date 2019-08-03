@@ -5,6 +5,10 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 
+import Alert from '@/plugins/ui/alert';
+
+Vue.use(Alert);
+
 Vue.config.productionTip = false;
 
 new Vue({
