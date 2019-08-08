@@ -12,13 +12,13 @@ const initState: {
   isLogin: boolean;
   savedMethods: Array<() => void>;
   isLoading: boolean;
-  lastDiaryIndex: number;
+  lastDiaryIndex: number | null;
 } = {
   myUser: undefined,
   isLogin: false,
   savedMethods: [],
   isLoading: true,
-  lastDiaryIndex: -1
+  lastDiaryIndex: null
 };
 
 export default new Vuex.Store({
@@ -49,7 +49,7 @@ export default new Vuex.Store({
       console.log('loading end');
     },
     addLastDiaryIndex(state) {
-      if (state.lastDiaryIndex !== -1) {
+      if (!_.isNil(state.lastDiaryIndex)) {
         state.lastDiaryIndex += 1;
         console.log('success addLastIndex');
       }

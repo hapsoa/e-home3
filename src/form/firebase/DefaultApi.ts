@@ -12,6 +12,7 @@ interface Database<T> {
   read: (id: string) => Promise<T>;
   update: (id: string, data: T) => Promise<void>;
   delete: (id: string) => Promise<void>;
+  [databaseElement: string]: any;
 }
 
 export default abstract class DefaultApi<T extends DefaultData> {

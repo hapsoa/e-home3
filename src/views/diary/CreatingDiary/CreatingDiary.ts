@@ -23,22 +23,26 @@ export default class CreatingDiary extends Vue {
 
   private async saveDiary() {
     // 마지막 index를 가지고 있는지 확인
-    // if (_.isNil(this.$store.state.lastDiaryIndex)) {
-    //   await this.$store.dispatch('setLastDiaryIndex');
-    // }
+    console.log(1);
+    if (_.isNil(this.$store.state.lastDiaryIndex)) {
+      // await this.$store.dispatch('setLastDiaryIndex');
+      const lastDiary: Diary = await Diary.getLastDiary(this.$store.state.myUser.data.uid);
+      this.$store.state.lastDiaryIndex = lastDiary.data.index;
+    }
 
     // index를 확인할 수 있도록 database를 조정하는데
     //
-
+    console.log(2);
     // 일기제목 확인
     if (this.diary.data.title === '') {
       this.diary.data.title = new Date().toLocaleString();
     }
 
+    console.log(3);
     // 새로 글 쓰는 상황일 때
     if (_.isNil(this.$route.query.diaryId)) {
       try {
-        this.diary.saveForCreate(this.$store.state.myUser.data.uid);
+        this.diary.saveForCreate(this.$store.state.myUser.data.uid, this.$store.state.lastDiaryIndex);
         //     firebase.database.setDiary({
         //       title: this.diaryTitle,
         //       contents: this.diaryContents,
@@ -46,7 +50,7 @@ export default class CreatingDiary extends Vue {
         //     });
         //     this.$store.commit('addLastDiaryIndex');
       } catch (error) {
-        console.error(error);
+        console.error('saveDiary에서 saveForCreate() 에러남', error);
       }
     } else {
       this.diary.saveForUpdate();

@@ -1,6 +1,7 @@
 import uuidv1 from 'uuid/v1';
 import firebase from '../firebase';
 import _ from 'lodash';
+import { User } from '.';
 
 export interface DiaryData {
   id: string;
@@ -11,6 +12,9 @@ export interface DiaryData {
 }
 
 export default class Diary {
+  /**
+   * Diary instance를 생성한다.
+   */
   public static create() {
     return new Diary({
       id: uuidv1(),
@@ -37,6 +41,22 @@ export default class Diary {
     return diaries;
   }
 
+  public static async getByPage() {
+    //
+  }
+
+  public static getLastDiary(userId: string): Promise<Diary> {
+    return new Promise((resolve, reject) => {
+      firebase.diaryApi.readUserLastDiaryData(userId)
+        .then(diaryData => {
+          resolve(new Diary(diaryData));
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
   public data!: DiaryData;
   public content: string = '';
 
@@ -44,9 +64,10 @@ export default class Diary {
     this.data = data;
   }
 
-  public async saveForCreate(userId: string) {
+  public async saveForCreate(userId: string, lastUserDiaryIndex: number) {
     this.data.uid = userId;
     this.data.date = new Date().getTime();
+    this.data.index = lastUserDiaryIndex + 1;
     const promises = [
       firebase.diaryApi.db.create(this.data.id, this.data),
       firebase.diaryApi.storage.createString(this.data.id, this.content)

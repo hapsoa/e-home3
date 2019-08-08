@@ -31,7 +31,8 @@ firebase.boardPost.db.create()
 
 
 
-
+정렬해서 가져올 수 있도록 해야 한다.
+diary마다 number를 매기는게 좋으려나?
 
 
 
