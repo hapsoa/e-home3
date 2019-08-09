@@ -41,10 +41,22 @@ export default class Diary {
     return diaries;
   }
 
-  public static async getByPage() {
-    //
+  public static async getByPage(o: {
+    userId: string,
+    pageNumber: number,
+    lastDiaryIndex: number,
+    numOfDiariesPerPage: number
+  }): Promise<Diary[]> {
+    const diaryDatas = await firebase.diaryApi.readByPage(o);
+    const diaries = _.map(diaryDatas, diaryData => new Diary(diaryData));
+    return diaries;
   }
 
+  /**
+   * 해당 유저의 마지막 diary instance를 가지고 온다.
+   * (content는 안가지고 오도록 하였다.)
+   * @param userId
+   */
   public static getLastDiary(userId: string): Promise<Diary> {
     return new Promise((resolve, reject) => {
       firebase.diaryApi.readUserLastDiaryData(userId)
@@ -52,6 +64,7 @@ export default class Diary {
           resolve(new Diary(diaryData));
         })
         .catch(error => {
+          // lastdiary가 없는 경우를 생각해야 한다
           reject(error);
         });
     });
