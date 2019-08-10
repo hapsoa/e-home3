@@ -11,6 +11,41 @@ export default class CreatingDiary extends Vue {
 
   private editorType: string = 'normal-editor'; // normal-editor, ...
 
+  /**
+   * diary를 저장하는 함수이다.
+   */
+  private async saveDiary() {
+    // 마지막 index를 가지고 있는지 확인
+    if (_.isNil(this.$store.state.lastDiaryIndex)) {
+      // await this.$store.dispatch('setLastDiaryIndex');
+      const lastDiary: Diary = await Diary.getLastDiary(this.$store.state.myUser.data.uid);
+      this.$store.state.lastDiaryIndex = lastDiary.data.index;
+    }
+
+    // index를 확인할 수 있도록 database를 조정하는데
+
+    // 일기제목 확인
+    if (this.diary.data.title === '') {
+      this.diary.data.title = new Date().toLocaleString();
+    }
+
+    // 새로 글 쓰는 상황일 때
+    if (_.isNil(this.$route.query.diaryId)) {
+      try {
+        await this.diary.saveForCreate(this.$store.state.myUser.data.uid, this.$store.state.lastDiaryIndex);
+
+        this.$store.state.lastDiaryIndex += 1;
+      } catch (error) {
+        console.error('saveDiary에서 saveForCreate() 에러남', error);
+      }
+    } else {
+      // 수정하는 상황일 때
+      await this.diary.saveForUpdate();
+    }
+
+    this.$router.push({ name: 'diary' });
+  }
+
   private async created() {
     // query가 있으면 가지고 온다.
     const diaryId: string = this.$route.query.diaryId as string;
@@ -19,46 +54,6 @@ export default class CreatingDiary extends Vue {
     } else {
       this.diary = await Diary.get(diaryId);
     }
-  }
-
-  private async saveDiary() {
-    // 마지막 index를 가지고 있는지 확인
-    console.log(1);
-    if (_.isNil(this.$store.state.lastDiaryIndex)) {
-      // await this.$store.dispatch('setLastDiaryIndex');
-      const lastDiary: Diary = await Diary.getLastDiary(this.$store.state.myUser.data.uid);
-      this.$store.state.lastDiaryIndex = lastDiary.data.index;
-    }
-
-    // index를 확인할 수 있도록 database를 조정하는데
-    //
-    console.log(2);
-    // 일기제목 확인
-    if (this.diary.data.title === '') {
-      this.diary.data.title = new Date().toLocaleString();
-    }
-
-    console.log(3);
-    // 새로 글 쓰는 상황일 때
-    if (_.isNil(this.$route.query.diaryId)) {
-      try {
-        this.diary.saveForCreate(this.$store.state.myUser.data.uid, this.$store.state.lastDiaryIndex);
-        //     firebase.database.setDiary({
-        //       title: this.diaryTitle,
-        //       contents: this.diaryContents,
-        //       index: this.$store.state.lastDiaryIndex + 1,
-        //     });
-        //     this.$store.commit('addLastDiaryIndex');
-      } catch (error) {
-        console.error('saveDiary에서 saveForCreate() 에러남', error);
-      }
-    } else {
-      this.diary.saveForUpdate();
-      // 수정하는 상황일 때
-      // firebase.database.reviseDiary(this.$route.query.diaryId);
-    }
-
-    this.$router.push({ name: 'diary' });
   }
 }
 

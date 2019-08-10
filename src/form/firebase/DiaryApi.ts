@@ -316,6 +316,13 @@ class DiaryApi extends DefaultApi<DiaryData> {
     }
   }
 
+  /**
+   * 페이지별 해당 user의 diaryData를 가져오는 함수이다.
+   * @param o.userId: userId
+   * @param pageNumber: 현재 페이지
+   * @param 해당 user의 마지막 diary index
+   * @param 페이지당 diary의 수
+   */
   public readByPage(o: {
     userId: string,
     pageNumber: number,
@@ -323,7 +330,7 @@ class DiaryApi extends DefaultApi<DiaryData> {
     numOfDiariesPerPage: number
   }): Promise<DiaryData[]> {
     return new Promise((resolve, reject) => {
-      console.log('readByUserId start', o.userId);
+      console.log('1234', o);
       this.db.collection
         .where('uid', '==', o.userId)
         .orderBy('index', 'desc')
