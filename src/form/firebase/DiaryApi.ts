@@ -239,27 +239,7 @@ class DiaryApi extends DefaultApi<DiaryData> {
     };
 
     this.db.readUserLastDiary = (userId: string) => {
-      return new Promise((resolve, reject) => {
-        this.db.collection
-          .where('uid', '==', userId)
-          .orderBy('index', 'desc')
-          .limit(1)
-          .get()
-          .then(querySnapshot => {
-            console.log('querySnapshot', querySnapshot);
-            let data!: DiaryData;
-            querySnapshot.forEach(doc => {
-              // doc.data() is never undefined for query doc snapshots
-              console.log(doc.id, ' => ', doc.data());
-              data = doc.data() as DiaryData;
-            });
-            resolve(data);
-          })
-          .catch(error => {
-            console.error('Error getting documents: ', error);
-            reject(error);
-          });
-      });
+      //
     };
   }
 
