@@ -15,6 +15,7 @@ interface Database<T> {
   [databaseElement: string]: any;
 }
 
+// 변수를 넣는게 아니라, db와 storage에 대한 각각의 함수를 밖으로 빼 두는 것이 좋아보인다.
 export default abstract class DefaultApi<T extends DefaultData> {
 
   public db: Database<T> = {
