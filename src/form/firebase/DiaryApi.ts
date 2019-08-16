@@ -3,7 +3,6 @@ import _ from 'lodash';
 import firebase from './initializingFirebase';
 import { DiaryData } from '../class/Diary';
 import DefaultApi from './DefaultApi';
-// import { ClothData, MajorClass } from '@/api/class/Cloth';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const database = firebase.firestore();
