@@ -1,7 +1,6 @@
 import uuidv1 from 'uuid/v1';
 import firebase from '../firebase';
 import _ from 'lodash';
-import { User } from '.';
 
 export interface DiaryData {
   id: string;
